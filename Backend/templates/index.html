@@ -5,11 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyBuddy AI</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-        textarea { width: 100%; height: 150px; }
-        #resultado { background-color: #f4f4f4; border: 1px solid #ccc; padding: 10px; min-height: 50px; }
-        button { background-color: #007bff; color: white; padding: 10px; border: none; cursor: pointer; }
-        #loading { display: none; }
+    /* --- Inicio del CSS --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #4a4a4a;
+    font-size: 2.5em; /* Más grande */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 span {
+    margin-right: 15px; /* Espacio para el emoji */
+}
+
+h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+
+textarea {
+    width: 97%;
+    height: 150px;
+    padding: 15px;
+    font-size: 1.1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: vertical; /* Permite al usuario cambiar la altura */
+}
+
+/* Contenedor para los botones */
+.controles {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px; /* Espacio entre elementos */
+    align-items: center;
+}
+
+select {
+    font-size: 1em;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+/* Botón de Procesar (Azul) */
+.btn-procesar {
+    background-color: #007bff;
+    color: white;
+}
+.btn-procesar:hover {
+    background-color: #0056b3;
+    transform: scale(1.03); /* Efecto de salto */
+}
+
+/* Botón de Pronunciar (Gris) */
+.btn-pronunciar {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-pronunciar:hover {
+    background-color: #5a6268;
+    transform: scale(1.03);
+}
+
+#resultado {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 80px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+#loading {
+    display: none;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+}
+/* --- Fin del CSS --- */
     </style>
 </head>
 <body>
@@ -17,6 +114,7 @@
 
     <textarea id="textoUsuario" placeholder="Escribe el texto que quieres practicar..."></textarea>
 
+    <div class="controles">
     <select id="tarea">
         <option value="Traduce al inglés">Traducir a Inglés</option>
         <option value="Traduce al español">Traducir a Español</option>
@@ -25,8 +123,9 @@
         <option value="Dame 3 palabras de vocabulario clave con su definición en inglés">Vocabulario Clave</option>
     </select>
 
-    <button onclick="llamarIA()">Procesar</button>
-    <button onclick="pronunciarTexto()">🔊 Pronunciar (en Inglés)</button>
+    <button onclick="llamarIA()" class="btn-procesar">Procesar</button>
+    <button onclick="pronunciarTexto()" class="btn-pronunciar">🔊 Pronunciar</button>
+</div>
 
     <h3>Respuesta:</h3>
     <div id="loading">Procesando... 🧠</div>
