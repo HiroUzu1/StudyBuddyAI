@@ -36,6 +36,7 @@ def procesar_texto():
         return jsonify({'respuesta': respuesta_ia.text})
 
     except Exception as e:
+        print(f"¡¡¡ERROR CAPTURADO!!!: {e}", flush=True)
         return jsonify({'respuesta': f"Error: {str(e)}"})
 
 # Esta parte solo se usa si lo corres localmente
