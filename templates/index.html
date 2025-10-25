@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy AI</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        textarea { width: 100%; height: 150px; }
+        #resultado { background-color: #f4f4f4; border: 1px solid #ccc; padding: 10px; min-height: 50px; }
+        button { background-color: #007bff; color: white; padding: 10px; border: none; cursor: pointer; }
+        #loading { display: none; }
+    </style>
+</head>
+<body>
+    <h1>StudyBuddy AI 🤖</h1>
+
+    <textarea id="textoUsuario" placeholder="Escribe el texto que quieres practicar..."></textarea>
+
+    <select id="tarea">
+        <option value="Traduce al inglés">Traducir a Inglés</option>
+        <option value="Traduce al español">Traducir a Español</option>
+        <option value="Resume el texto">Resumir el texto</option>
+        <option value="Corrige la gramática">Corregir Gramática</option>
+        <option value="Dame 3 palabras de vocabulario clave con su definición en inglés">Vocabulario Clave</option>
+    </select>
+
+    <button onclick="llamarIA()">Procesar</button>
+    <button onclick="pronunciarTexto()">🔊 Pronunciar (en Inglés)</button>
+
+    <h3>Respuesta:</h3>
+    <div id="loading">Procesando... 🧠</div>
+    <div id="resultado"></div>
+
+    <script>
+        async function llamarIA() {
+            const texto = document.getElementById('textoUsuario').value;
+            const tarea = document.getElementById('tarea').value;
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultado').innerText = '';
+
+            const response = await fetch('/procesar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texto: texto, tarea: tarea })
+            });
+
+            const data = await response.json();
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('resultado').innerText = data.respuesta;
+        }
+
+        function pronunciarTexto() {
+            // Esta función usa la voz del navegador, ¡no necesita IA!
+            const texto = document.getElementById('resultado').innerText;
+            const utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = 'en-US'; // Voz en Inglés
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
