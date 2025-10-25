@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Usamos os.environ.get para tomar la clave de Render (¡Más seguro!)
 api_key = os.environ.get("GEMINI_API_KEY") 
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
 # 3. Ruta principal: Sirve la página web
 @app.route('/')
