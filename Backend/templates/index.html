@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>StudyBuddy AI</title>
     <style>
     /* --- Inicio del CSS --- */
@@ -135,20 +136,29 @@ button {
         async function llamarIA() {
             const texto = document.getElementById('textoUsuario').value;
             const tarea = document.getElementById('tarea').value;
+            // Token CSRF que Flask puso en el <meta> de arriba
+            const tokenCsrf = document.querySelector('meta[name="csrf-token"]').content;
 
             document.getElementById('loading').style.display = 'block';
             document.getElementById('resultado').innerText = '';
 
-            const response = await fetch('/procesar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ texto: texto, tarea: tarea })
-            });
+            try {
+                const response = await fetch('/procesar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': tokenCsrf
+                    },
+                    body: JSON.stringify({ texto: texto, tarea: tarea })
+                });
 
-            const data = await response.json();
-
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('resultado').innerText = data.respuesta;
+                const data = await response.json();
+                document.getElementById('resultado').innerText = data.respuesta;
+            } catch (error) {
+                document.getElementById('resultado').innerText = 'No se pudo conectar con el servidor. Inténtalo de nuevo.';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
         }
 
         function pronunciarTexto() {
