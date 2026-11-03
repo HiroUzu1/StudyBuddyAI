@@ -113,10 +113,12 @@ button {
 <body>
     <h1>StudyBuddy AI 🤖</h1>
 
-    <textarea id="textoUsuario" placeholder="Escribe el texto que quieres practicar..."></textarea>
+    <!-- Solución: Se agregó aria-label al textarea -->
+    <textarea id="textoUsuario" aria-label="Texto a practicar" placeholder="Escribe el texto que quieres practicar..."></textarea>
 
     <div class="controles">
-    <select id="tarea">
+    <!-- Solución: Se agregó aria-label al select -->
+    <select id="tarea" aria-label="Seleccionar tipo de tarea">
         <option value="Traduce al inglés">Traducir a Inglés</option>
         <option value="Traduce al español">Traducir a Español</option>
         <option value="Resume el texto">Resumir el texto</option>
